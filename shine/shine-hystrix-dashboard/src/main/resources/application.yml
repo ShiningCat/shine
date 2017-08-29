@@ -1,0 +1,6 @@
+# 该服务开放的端口号
+server:
+    port: 5000
+spring:
+    application:
+        name:  hystrix-dashboard

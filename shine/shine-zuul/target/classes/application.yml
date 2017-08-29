@@ -1,0 +1,21 @@
+# 该服务开放的端口号
+server:
+    port: 1001
+
+# 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
+spring:
+    application:
+        name: service-zuul
+eureka:
+    client:
+        # 指定服务注册中心的地址
+        serviceUrl:
+            defaultZone: http://127.0.0.1:1000/eureka/
+zuul:
+    routes:
+        consumer-a:
+            path: /web/**
+            serviceId: shine-web
+        consumer-b:
+            path: /member/**
+            serviceId: shine-menber

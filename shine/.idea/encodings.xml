@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-cm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-hystrix-dashboard" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-turbine" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shine-zuul" charset="UTF-8" />
+  </component>
+</project>
