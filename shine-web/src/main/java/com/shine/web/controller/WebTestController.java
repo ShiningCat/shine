@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shine.web.service.WebTestService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
 public class WebTestController {
@@ -15,6 +18,10 @@ public class WebTestController {
 	
 	@GetMapping("/consumer")
     public String consumer() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("aa");
+		list.add("cc");
+		list.forEach(x -> System.out.print(x));
 		return service.consumer();
     }
 }
