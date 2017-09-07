@@ -1,19 +1,12 @@
-package com.shine.web;
+package com.shine.member;
 
-import com.shine.web.websocket.RequestListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-
-import javax.annotation.Resource;
 
 /**
  * Feign 使用暴露接口消费服务的方法
@@ -28,10 +21,10 @@ import javax.annotation.Resource;
 @EnableHystrix
 @EnableFeignClients
 @SpringBootApplication
-@ComponentScan(basePackages ="com.shine.web")
+@ComponentScan(basePackages ="com.shine.member")
 @ServletComponentScan
 @EnableRedisHttpSession
-public class ShineWebAppliction {
+public class ShineMemberAppliction {
 
 //	@Bean
 //	@LoadBalanced
@@ -39,7 +32,7 @@ public class ShineWebAppliction {
 //		return new RestTemplate();
 //	}
 	public static void main(String[] args) {
-		SpringApplication.run(ShineWebAppliction.class, args);
+		SpringApplication.run(ShineMemberAppliction.class, args);
 	}
 
 

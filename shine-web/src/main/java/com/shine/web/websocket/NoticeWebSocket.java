@@ -2,10 +2,8 @@ package com.shine.web.websocket;
 
 import org.springframework.stereotype.Component;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.servlet.http.HttpSession;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * 通知 webSocket
  */
-@ServerEndpoint("/websocket")
+@ServerEndpoint(value = "/websocket", configurator = HttpSessionConfigurator.class)
 @Component
 public class NoticeWebSocket {
 
@@ -32,8 +30,17 @@ public class NoticeWebSocket {
     private Session session;
 
     @OnOpen
-    public void onOpen (Session session){
+    public void onOpen (Session session, EndpointConfig config){
 
+        HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+        System.out.println(httpSession.toString());
+        System.out.println(httpSession.toString());
+        System.out.println(httpSession.toString());
+        System.out.println(httpSession.toString());
+        System.out.println(httpSession.toString());
+        System.out.println(httpSession.toString());
+        System.out.println(httpSession.toString());
+        httpSession.getAttribute("userId");
         this.session = session;
         //会话的当前空闲超时时间，以毫秒为单位。 零或负值表示无限超时。
         System.out.println("当前用户最大超时时间为:" + session.getMaxIdleTimeout() + "毫秒");
