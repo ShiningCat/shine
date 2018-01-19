@@ -12,8 +12,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * 通知 webSocket
  */
-@ServerEndpoint(value = "/websocket", configurator = HttpSessionConfigurator.class)
-@Component
+//@ServerEndpoint(value = "/websocket", configurator = HttpSessionConfigurator.class)
+//@Component
 public class NoticeWebSocket {
 
     private static int onlineCount = 0;
@@ -24,7 +24,7 @@ public class NoticeWebSocket {
      * 用user_id 做Key
      * session 对应每一个会话
      */
-    private static ConcurrentHashMap<String,NoticeWebSocket> sessionWebSocketMap = new ConcurrentHashMap<String,NoticeWebSocket>();
+//    private static ConcurrentHashMap<String,NoticeWebSocket> sessionWebSocketMap = new ConcurrentHashMap<String,NoticeWebSocket>();
     private static CopyOnWriteArraySet<NoticeWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     private Session session;
@@ -32,15 +32,15 @@ public class NoticeWebSocket {
     @OnOpen
     public void onOpen (Session session, EndpointConfig config){
 
-        HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
-        System.out.println(httpSession.toString());
-        System.out.println(httpSession.toString());
-        System.out.println(httpSession.toString());
-        System.out.println(httpSession.toString());
-        System.out.println(httpSession.toString());
-        System.out.println(httpSession.toString());
-        System.out.println(httpSession.toString());
-        httpSession.getAttribute("userId");
+//        HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+//        System.out.println(httpSession.toString());
+//        System.out.println(httpSession.toString());
+//        System.out.println(httpSession.toString());
+//        System.out.println(httpSession.toString());
+//        System.out.println(httpSession.toString());
+//        System.out.println(httpSession.toString());
+//        System.out.println(httpSession.toString());
+//        httpSession.getAttribute("userId");
         this.session = session;
         //会话的当前空闲超时时间，以毫秒为单位。 零或负值表示无限超时。
         System.out.println("当前用户最大超时时间为:" + session.getMaxIdleTimeout() + "毫秒");

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.business.BForumThemeInfoMapper">
+    <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TForumThemeInfo">
+        <id column="THEME_ID" jdbcType="BIGINT" property="themeId" />
+        <result column="THEME_TOPIC_ID" jdbcType="BIGINT" property="themeTopicId" />
+        <result column="THEME_USER_ID" jdbcType="BIGINT" property="themeUserId" />
+        <result column="THEME_NAME" jdbcType="VARCHAR" property="themeName" />
+        <result column="THEME_USER_NAME" jdbcType="VARCHAR" property="themeUserName" />
+        <result column="THEME_CONTENT" jdbcType="VARCHAR" property="themeContent" />
+        <result column="THEME_REPLY_NUMBER" jdbcType="INTEGER" property="themeReplyNumber" />
+        <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        THEME_ID, THEME_TOPIC_ID, THEME_USER_ID, THEME_NAME, THEME_USER_NAME, THEME_CONTENT,
+        THEME_REPLY_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME,
+        DEL_FLAG
+    </sql>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from shine.forum_theme_info
+        where THEME_USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+    <sql id="BaseColumnAlias">
+        T.THEME_ID, T.THEME_TOPIC_ID, T.THEME_USER_ID, T.THEME_NAME, T.THEME_USER_NAME, T.THEME_CONTENT,
+        T.THEME_REPLY_NUMBER, T.MODIFIER_USER_NAME, T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME,
+        T.DEL_FLAG
+    </sql>
+</mapper>

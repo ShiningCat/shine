@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.forum.mapper.db.TForumCommentInfoMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TForumCommentInfo">
+    <id column="COMMENT_ID" jdbcType="BIGINT" property="commentId" />
+    <result column="COMMENT_REPLY_ID" jdbcType="BIGINT" property="commentReplyId" />
+    <result column="COMMENT_USER_ID" jdbcType="BIGINT" property="commentUserId" />
+    <result column="COMMENT_USER_NAME" jdbcType="VARCHAR" property="commentUserName" />
+    <result column="COMMENT_CONTENT" jdbcType="VARCHAR" property="commentContent" />
+    <result column="REPLY_SOMEONE" jdbcType="TINYINT" property="replySomeone" />
+    <result column="COMMENT_REPLY_USER_ID" jdbcType="BIGINT" property="commentReplyUserId" />
+    <result column="COMMENT_REPLY_USER_NAME" jdbcType="VARCHAR" property="commentReplyUserName" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    COMMENT_ID, COMMENT_REPLY_ID, COMMENT_USER_ID, COMMENT_USER_NAME, COMMENT_CONTENT, 
+    REPLY_SOMEONE, COMMENT_REPLY_USER_ID, COMMENT_REPLY_USER_NAME, MODIFIER_USER_NAME, 
+    MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.forum_comment_info
+    where COMMENT_ID = #{commentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.forum_comment_info
+    where COMMENT_ID = #{commentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TForumCommentInfo">
+    insert into ${db.shine}.forum_comment_info (COMMENT_ID, COMMENT_REPLY_ID, COMMENT_USER_ID, 
+      COMMENT_USER_NAME, COMMENT_CONTENT, REPLY_SOMEONE, 
+      COMMENT_REPLY_USER_ID, COMMENT_REPLY_USER_NAME, 
+      MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
+      CREATE_TIME, DEL_FLAG)
+    values (#{commentId,jdbcType=BIGINT}, #{commentReplyId,jdbcType=BIGINT}, #{commentUserId,jdbcType=BIGINT}, 
+      #{commentUserName,jdbcType=VARCHAR}, #{commentContent,jdbcType=VARCHAR}, #{replySomeone,jdbcType=TINYINT}, 
+      #{commentReplyUserId,jdbcType=BIGINT}, #{commentReplyUserName,jdbcType=VARCHAR}, 
+      #{modifierUserName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{creatorUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TForumCommentInfo">
+    insert into ${db.shine}.forum_comment_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        COMMENT_ID,
+      </if>
+      <if test="commentReplyId != null">
+        COMMENT_REPLY_ID,
+      </if>
+      <if test="commentUserId != null">
+        COMMENT_USER_ID,
+      </if>
+      <if test="commentUserName != null">
+        COMMENT_USER_NAME,
+      </if>
+      <if test="commentContent != null">
+        COMMENT_CONTENT,
+      </if>
+      <if test="replySomeone != null">
+        REPLY_SOMEONE,
+      </if>
+      <if test="commentReplyUserId != null">
+        COMMENT_REPLY_USER_ID,
+      </if>
+      <if test="commentReplyUserName != null">
+        COMMENT_REPLY_USER_NAME,
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="commentReplyId != null">
+        #{commentReplyId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserId != null">
+        #{commentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserName != null">
+        #{commentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replySomeone != null">
+        #{replySomeone,jdbcType=TINYINT},
+      </if>
+      <if test="commentReplyUserId != null">
+        #{commentReplyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commentReplyUserName != null">
+        #{commentReplyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifierUserName != null">
+        #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TForumCommentInfo">
+    update ${db.shine}.forum_comment_info
+    <set>
+      <if test="commentReplyId != null">
+        COMMENT_REPLY_ID = #{commentReplyId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserId != null">
+        COMMENT_USER_ID = #{commentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserName != null">
+        COMMENT_USER_NAME = #{commentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replySomeone != null">
+        REPLY_SOMEONE = #{replySomeone,jdbcType=TINYINT},
+      </if>
+      <if test="commentReplyUserId != null">
+        COMMENT_REPLY_USER_ID = #{commentReplyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commentReplyUserName != null">
+        COMMENT_REPLY_USER_NAME = #{commentReplyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where COMMENT_ID = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TForumCommentInfo">
+    update ${db.shine}.forum_comment_info
+    set COMMENT_REPLY_ID = #{commentReplyId,jdbcType=BIGINT},
+      COMMENT_USER_ID = #{commentUserId,jdbcType=BIGINT},
+      COMMENT_USER_NAME = #{commentUserName,jdbcType=VARCHAR},
+      COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      REPLY_SOMEONE = #{replySomeone,jdbcType=TINYINT},
+      COMMENT_REPLY_USER_ID = #{commentReplyUserId,jdbcType=BIGINT},
+      COMMENT_REPLY_USER_NAME = #{commentReplyUserName,jdbcType=VARCHAR},
+      MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where COMMENT_ID = #{commentId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TForumCommentInfo">
+    update ${db.shine}.forum_comment_info set del_flag='2' where COMMENT_ID = #{commentId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.forum_comment_info
+    <set>
+      <if test="commentReplyId != null">
+        COMMENT_REPLY_ID = #{commentReplyId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserId != null">
+        COMMENT_USER_ID = #{commentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserName != null">
+        COMMENT_USER_NAME = #{commentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        COMMENT_CONTENT = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replySomeone != null">
+        REPLY_SOMEONE = #{replySomeone,jdbcType=TINYINT},
+      </if>
+      <if test="commentReplyUserId != null">
+        COMMENT_REPLY_USER_ID = #{commentReplyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commentReplyUserName != null">
+        COMMENT_REPLY_USER_NAME = #{commentReplyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where COMMENT_ID = #{commentId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.COMMENT_ID, T.COMMENT_REPLY_ID, T.COMMENT_USER_ID, T.COMMENT_USER_NAME, T.COMMENT_CONTENT, 
+    T.REPLY_SOMEONE, T.COMMENT_REPLY_USER_ID, T.COMMENT_REPLY_USER_NAME, T.MODIFIER_USER_NAME, 
+    T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
+  </sql>
+</mapper>

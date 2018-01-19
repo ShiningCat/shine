@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 
-@Component
-@WebListener
+//@Component
+//@WebListener
 public class RequestListener implements ServletRequestListener {
 
     public void requestInitialized(ServletRequestEvent sre)  {

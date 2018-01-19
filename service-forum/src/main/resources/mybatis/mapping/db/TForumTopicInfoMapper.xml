@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.forum.mapper.db.TForumTopicInfoMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TForumTopicInfo">
+    <id column="TOPIC_ID" jdbcType="BIGINT" property="topicId" />
+    <result column="TOPIC_NAME" jdbcType="VARCHAR" property="topicName" />
+    <result column="TOPIC_USER_ID" jdbcType="BIGINT" property="topicUserId" />
+    <result column="TOPIC_USER_NAME" jdbcType="VARCHAR" property="topicUserName" />
+    <result column="TOPIC_IMAGE" jdbcType="VARCHAR" property="topicImage" />
+    <result column="TOPIC_CONTENT" jdbcType="VARCHAR" property="topicContent" />
+    <result column="TOPIC_THEME_NUMBER" jdbcType="INTEGER" property="topicThemeNumber" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TOPIC_ID, TOPIC_NAME, TOPIC_USER_ID, TOPIC_USER_NAME, TOPIC_IMAGE, TOPIC_CONTENT, 
+    TOPIC_THEME_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, 
+    DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.forum_topic_info
+    where TOPIC_ID = #{topicId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.forum_topic_info
+    where TOPIC_ID = #{topicId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TForumTopicInfo">
+    insert into ${db.shine}.forum_topic_info (TOPIC_ID, TOPIC_NAME, TOPIC_USER_ID, 
+      TOPIC_USER_NAME, TOPIC_IMAGE, TOPIC_CONTENT, 
+      TOPIC_THEME_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, 
+      CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+      )
+    values (#{topicId,jdbcType=BIGINT}, #{topicName,jdbcType=VARCHAR}, #{topicUserId,jdbcType=BIGINT}, 
+      #{topicUserName,jdbcType=VARCHAR}, #{topicImage,jdbcType=VARCHAR}, #{topicContent,jdbcType=VARCHAR}, 
+      #{topicThemeNumber,jdbcType=INTEGER}, #{modifierUserName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{creatorUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TForumTopicInfo">
+    insert into ${db.shine}.forum_topic_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="topicId != null">
+        TOPIC_ID,
+      </if>
+      <if test="topicName != null">
+        TOPIC_NAME,
+      </if>
+      <if test="topicUserId != null">
+        TOPIC_USER_ID,
+      </if>
+      <if test="topicUserName != null">
+        TOPIC_USER_NAME,
+      </if>
+      <if test="topicImage != null">
+        TOPIC_IMAGE,
+      </if>
+      <if test="topicContent != null">
+        TOPIC_CONTENT,
+      </if>
+      <if test="topicThemeNumber != null">
+        TOPIC_THEME_NUMBER,
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="topicId != null">
+        #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="topicName != null">
+        #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicUserId != null">
+        #{topicUserId,jdbcType=BIGINT},
+      </if>
+      <if test="topicUserName != null">
+        #{topicUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicImage != null">
+        #{topicImage,jdbcType=VARCHAR},
+      </if>
+      <if test="topicContent != null">
+        #{topicContent,jdbcType=VARCHAR},
+      </if>
+      <if test="topicThemeNumber != null">
+        #{topicThemeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="modifierUserName != null">
+        #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TForumTopicInfo">
+    update ${db.shine}.forum_topic_info
+    <set>
+      <if test="topicName != null">
+        TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicUserId != null">
+        TOPIC_USER_ID = #{topicUserId,jdbcType=BIGINT},
+      </if>
+      <if test="topicUserName != null">
+        TOPIC_USER_NAME = #{topicUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicImage != null">
+        TOPIC_IMAGE = #{topicImage,jdbcType=VARCHAR},
+      </if>
+      <if test="topicContent != null">
+        TOPIC_CONTENT = #{topicContent,jdbcType=VARCHAR},
+      </if>
+      <if test="topicThemeNumber != null">
+        TOPIC_THEME_NUMBER = #{topicThemeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where TOPIC_ID = #{topicId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TForumTopicInfo">
+    update ${db.shine}.forum_topic_info
+    set TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+      TOPIC_USER_ID = #{topicUserId,jdbcType=BIGINT},
+      TOPIC_USER_NAME = #{topicUserName,jdbcType=VARCHAR},
+      TOPIC_IMAGE = #{topicImage,jdbcType=VARCHAR},
+      TOPIC_CONTENT = #{topicContent,jdbcType=VARCHAR},
+      TOPIC_THEME_NUMBER = #{topicThemeNumber,jdbcType=INTEGER},
+      MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where TOPIC_ID = #{topicId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TForumTopicInfo">
+    update ${db.shine}.forum_topic_info set del_flag='2' where TOPIC_ID = #{topicId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.forum_topic_info
+    <set>
+      <if test="topicName != null">
+        TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicUserId != null">
+        TOPIC_USER_ID = #{topicUserId,jdbcType=BIGINT},
+      </if>
+      <if test="topicUserName != null">
+        TOPIC_USER_NAME = #{topicUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicImage != null">
+        TOPIC_IMAGE = #{topicImage,jdbcType=VARCHAR},
+      </if>
+      <if test="topicContent != null">
+        TOPIC_CONTENT = #{topicContent,jdbcType=VARCHAR},
+      </if>
+      <if test="topicThemeNumber != null">
+        TOPIC_THEME_NUMBER = #{topicThemeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TOPIC_ID = #{topicId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.TOPIC_ID, T.TOPIC_NAME, T.TOPIC_USER_ID, T.TOPIC_USER_NAME, T.TOPIC_IMAGE, T.TOPIC_CONTENT, 
+    T.TOPIC_THEME_NUMBER, T.MODIFIER_USER_NAME, T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME, 
+    T.DEL_FLAG
+  </sql>
+</mapper>

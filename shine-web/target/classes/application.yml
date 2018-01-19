@@ -1,11 +1,19 @@
 # 该服务开放的端口号
 server:
     port: 2002
-
-# 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
+    context-path: /api
 spring:
-    application:
-        name: shine-web
+    redis:
+        host: 101.132.142.239
+        password: zhaitonghui12138!
+        post: 6379
+        pool:
+            maxTotal: 5
+            maxIdle: 2
+            minIdle: 1
+            testOnBorrow: true
+
+# 好像使用feign 断路器不会默认打开 要设置一下
 feign:
     hystrix:
         enabled: true
@@ -15,13 +23,23 @@ eureka:
         # 设置微服务调用地址为IP优先（缺省为false）
         prefer-ip-address: true
         # 心跳时间，即服务续约间隔时间（缺省为30s）
-        lease-renewal-interval-in-seconds: 5
+        lease-renewal-interval-in-seconds: 30
         # 发呆时间，即服务续约到期时间（缺省为90s）
-        lease-expiration-duration-in-seconds: 15
+        lease-expiration-duration-in-seconds: 60
     client:
         # 开启健康检查（依赖spring-boot-starter-actuator）
         #healthcheck:
         #    enabled: true
         # 指定服务注册中心的地址
         serviceUrl:
-            defaultZone: http://127.0.0.1:1000/eureka/
+            defaultZone: http://discovery:1000/eureka/
+# 解决Spring Cloud中Feign/Ribbon第一次请求失败的方法, Hystrix默认的超时时间是1秒如果超过这个时间尚未响应，
+# 将会进入fallback代码。而首次请求往往会比较慢（因为Spring的懒加载机制，要实例化一些类）
+# hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 3000 # 设置超时时间为3秒
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 10000

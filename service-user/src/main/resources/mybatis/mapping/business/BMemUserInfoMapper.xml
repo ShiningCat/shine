@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.business.BMemUserInfoMapper">
+    <resultMap id="ResultMap" type="com.shine.cm.common.bean.db.TMemUserInfo">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+        <result column="SEX" jdbcType="TINYINT" property="sex" />
+        <result column="USER_AVATAR" jdbcType="VARCHAR" property="userAvatar" />
+        <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+        <result column="USER_LEVEL" jdbcType="TINYINT" property="userLevel" />
+        <result column="THEME_NUMBER" jdbcType="INTEGER" property="themeNumber" />
+        <result column="REPLY_NUMBER" jdbcType="INTEGER" property="replyNumber" />
+        <result column="COMMENT_NUMBER" jdbcType="INTEGER" property="commentNumber" />
+        <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+    </resultMap>
+    <sql id="Base_Column">
+        USER_ID, USER_NAME, SEX, USER_AVATAR, EMAIL, USER_LEVEL, THEME_NUMBER, REPLY_NUMBER,
+        COMMENT_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME,
+        DEL_FLAG
+    </sql>
+    <select id="selectUserByCheckPassword" resultMap="ResultMap">
+        SELECT user_info.* FROM ${db.shine}.mem_user_info user_info LEFT JOIN ${db.shine}.mem_user_login  user_login ON user_login.user_id =  user_info.user_id WHERE user_login.EMAIL = #{email,jdbcType=VARCHAR} AND user_login.PASSWORD = #{password,jdbcType=VARCHAR} AND user_login.DEL_FLAG = 1
+    </select>
+    <select id="selectByEmail" parameterType="java.lang.String" resultMap="ResultMap">
+        select
+        <include refid="Base_Column" />
+        from ${db.shine}.mem_user_info
+        where EMAIL = #{email,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPhoneNum" parameterType="java.lang.Long" resultMap="ResultMap">
+        select
+        <include refid="Base_Column" />
+        from ${db.shine}.mem_user_info
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+    <select id="getUserByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(USER_NAME) from ${db.shine}.mem_user_info where  USER_NAME = #{userName,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertSelectiveReturnKey" parameterType="com.shine.cm.common.bean.db.TMemUserInfo" useGeneratedKeys="true" keyProperty="userId">
+        insert into ${db.shine}.mem_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="sex != null">
+                SEX,
+            </if>
+            <if test="userAvatar != null">
+                USER_AVATAR,
+            </if>
+            <if test="phone != null">
+                PHONE,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="userLevel != null">
+                USER_LEVEL,
+            </if>
+            <if test="themeNumber != null">
+                THEME_NUMBER,
+            </if>
+            <if test="replyNumber != null">
+                REPLY_NUMBER,
+            </if>
+            <if test="commentNumber != null">
+                COMMENT_NUMBER,
+            </if>
+            <if test="modifierUserName != null">
+                MODIFIER_USER_NAME,
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME,
+            </if>
+            <if test="creatorUserName != null">
+                CREATOR_USER_NAME,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="userAvatar != null">
+                #{userAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="userLevel != null">
+                #{userLevel,jdbcType=TINYINT},
+            </if>
+            <if test="themeNumber != null">
+                #{themeNumber,jdbcType=INTEGER},
+            </if>
+            <if test="replyNumber != null">
+                #{replyNumber,jdbcType=INTEGER},
+            </if>
+            <if test="commentNumber != null">
+                #{commentNumber,jdbcType=INTEGER},
+            </if>
+            <if test="modifierUserName != null">
+                #{modifierUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorUserName != null">
+                #{creatorUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,0 +1,40 @@
+# 该服务开放的端口号
+server:
+    port: 9000
+spring:
+    #redis
+    redis:
+        host: 101.132.142.239
+        password: zhaitonghui12138!
+        port: 6379
+        timeout: 3000
+        pool:
+            maxTotal: 10
+            maxIdle: 5
+            minIdle: 1
+            testOnBorrow: true
+eureka:
+    instance:
+        instance-id: ${spring.application.name}:${server.port}
+        # 设置微服务调用地址为IP优先（缺省为false）
+        prefer-ip-address: true
+        # 心跳时间，即服务续约间隔时间（缺省为30s）
+        lease-renewal-interval-in-seconds: 30
+        # 发呆时间，即服务续约到期时间（缺省为90s）
+        lease-expiration-duration-in-seconds: 60
+    client:
+        # 开启健康检查（依赖spring-boot-starter-actuator）
+        #healthcheck:
+        #    enabled: true
+        # 指定服务注册中心的地址
+#        registerWithEureka: true
+#        fetchRegistry: false
+        serviceUrl:
+            defaultZone: http://discovery:1000/eureka/
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 10000

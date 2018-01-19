@@ -2,24 +2,77 @@
 server:
     port: 2000
 
-# 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
+# mariaDB + druid数据源 配置
 spring:
-    application:
-        name: shine-service
-
+    datasource:
+        name: shine
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://101.132.142.239?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        username: root
+        password: zhaitonghui12138!
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        filters: stat
+        # initialSize 初始化连接数目
+        initial-size: 1
+        # 连接池支持的最大连接数，这里取值为20，表示同时最多有20个数据库连接。设 0 为没有限制。
+        max-active: 20
+        # 连接池中连接用完时,新的请求等待时间,毫秒，这里取值-1，表示无限等待，直到超时为止，
+        # 也可取值9000，表示9秒后超时。超过时间会出错误信息一般把max-Active设置成可能的并发量就行了
+        max-wait: 60000
+        # 连接池中最少空闲minPoolSize个连接
+        min-idle: 1
+        # 每timeBetweenEvictionRunsMillis毫秒秒检查一次连接池中空闲的连接,把空闲时间超过minEvictableIdleTimeMillis毫秒的连接断开,
+        # 直到连接池中的连接数到minIdle为止
+        time-between-eviction-runs-millis: 60000
+        # 连接池中连接可空闲的时间,毫秒
+        min-evictable-idle-time-millis: 300000
+        validation-query: select 'x'
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+    #redis
+    redis:
+        host: 101.132.142.239
+        password: zhaitonghui12138!
+        port: 6379
+        timeout: 3000
+        pool:
+            maxTotal: 10
+            maxIdle: 5
+            minIdle: 1
+            testOnBorrow: true
 eureka:
     instance:
         instance-id: ${spring.application.name}:${server.port}
         # 设置微服务调用地址为IP优先（缺省为false）
         prefer-ip-address: true
         # 心跳时间，即服务续约间隔时间（缺省为30s）
-        lease-renewal-interval-in-seconds: 5
+        lease-renewal-interval-in-seconds: 30
         # 发呆时间，即服务续约到期时间（缺省为90s）
-        lease-expiration-duration-in-seconds: 15
+        lease-expiration-duration-in-seconds: 60
     client:
         # 开启健康检查（依赖spring-boot-starter-actuator）
         #healthcheck:
         #    enabled: true
         # 指定服务注册中心的地址
+#        registerWithEureka: true
+#        fetchRegistry: false
         serviceUrl:
-            defaultZone: http://127.0.0.1:1000/eureka/
+            defaultZone: http://discovery:1000/eureka/
+mybatis:
+#    type-aliases-package: com.shine.cm.common.bean
+    mapper-locations: classpath:/mybatis/mapping/**/*.xml
+    configLocation: classpath:/mybatis-config.xml
+
+mapper:
+#    mappers: com.shine.service.util.MyMapper
+    not-empty: false
+    identity: MYSQL
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

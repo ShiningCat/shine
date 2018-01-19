@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.db.TMemUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TMemUserInfo">
+    <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="SEX" jdbcType="TINYINT" property="sex" />
+    <result column="USER_AVATAR" jdbcType="VARCHAR" property="userAvatar" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="INTRODUCE" jdbcType="VARCHAR" property="introduce" />
+    <result column="USER_LEVEL" jdbcType="TINYINT" property="userLevel" />
+    <result column="THEME_NUMBER" jdbcType="INTEGER" property="themeNumber" />
+    <result column="REPLY_NUMBER" jdbcType="INTEGER" property="replyNumber" />
+    <result column="COMMENT_NUMBER" jdbcType="INTEGER" property="commentNumber" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_ID, USER_NAME, SEX, USER_AVATAR, PHONE, EMAIL, INTRODUCE, USER_LEVEL, THEME_NUMBER, 
+    REPLY_NUMBER, COMMENT_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
+    CREATE_TIME, DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.mem_user_info
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.mem_user_info
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TMemUserInfo">
+    insert into ${db.shine}.mem_user_info (USER_ID, USER_NAME, SEX, 
+      USER_AVATAR, PHONE, EMAIL, 
+      INTRODUCE, USER_LEVEL, THEME_NUMBER, 
+      REPLY_NUMBER, COMMENT_NUMBER, MODIFIER_USER_NAME, 
+      MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, 
+      DEL_FLAG)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{userAvatar,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{introduce,jdbcType=VARCHAR}, #{userLevel,jdbcType=TINYINT}, #{themeNumber,jdbcType=INTEGER}, 
+      #{replyNumber,jdbcType=INTEGER}, #{commentNumber,jdbcType=INTEGER}, #{modifierUserName,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{creatorUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TMemUserInfo">
+    insert into ${db.shine}.mem_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="userAvatar != null">
+        USER_AVATAR,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="introduce != null">
+        INTRODUCE,
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL,
+      </if>
+      <if test="themeNumber != null">
+        THEME_NUMBER,
+      </if>
+      <if test="replyNumber != null">
+        REPLY_NUMBER,
+      </if>
+      <if test="commentNumber != null">
+        COMMENT_NUMBER,
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="userAvatar != null">
+        #{userAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        #{userLevel,jdbcType=TINYINT},
+      </if>
+      <if test="themeNumber != null">
+        #{themeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="replyNumber != null">
+        #{replyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentNumber != null">
+        #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="modifierUserName != null">
+        #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TMemUserInfo">
+    update ${db.shine}.mem_user_info
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="userAvatar != null">
+        USER_AVATAR = #{userAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL = #{userLevel,jdbcType=TINYINT},
+      </if>
+      <if test="themeNumber != null">
+        THEME_NUMBER = #{themeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="replyNumber != null">
+        REPLY_NUMBER = #{replyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentNumber != null">
+        COMMENT_NUMBER = #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TMemUserInfo">
+    update ${db.shine}.mem_user_info
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=TINYINT},
+      USER_AVATAR = #{userAvatar,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      USER_LEVEL = #{userLevel,jdbcType=TINYINT},
+      THEME_NUMBER = #{themeNumber,jdbcType=INTEGER},
+      REPLY_NUMBER = #{replyNumber,jdbcType=INTEGER},
+      COMMENT_NUMBER = #{commentNumber,jdbcType=INTEGER},
+      MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TMemUserInfo">
+    update ${db.shine}.mem_user_info set del_flag='2' where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.mem_user_info
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="userAvatar != null">
+        USER_AVATAR = #{userAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL = #{userLevel,jdbcType=TINYINT},
+      </if>
+      <if test="themeNumber != null">
+        THEME_NUMBER = #{themeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="replyNumber != null">
+        REPLY_NUMBER = #{replyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentNumber != null">
+        COMMENT_NUMBER = #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.USER_ID, T.USER_NAME, T.SEX, T.USER_AVATAR, T.PHONE, T.EMAIL, T.INTRODUCE, T.USER_LEVEL, 
+    T.THEME_NUMBER, T.REPLY_NUMBER, T.COMMENT_NUMBER, T.MODIFIER_USER_NAME, T.MODIFY_TIME, 
+    T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
+  </sql>
+</mapper>

@@ -10,12 +10,12 @@ eureka:
     client:
         # 指定服务注册中心的地址
         serviceUrl:
-            defaultZone: http://127.0.0.1:1000/eureka/
+            defaultZone: http://discovery:1000/eureka/
 zuul:
     routes:
         web:
-            path: /web/**
+            path: /**
             serviceId: shine-web
         member:
-            path: /member/**
-            serviceId: shine-menber
+            path: /user/**
+            serviceId: shine-user

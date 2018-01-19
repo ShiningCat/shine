@@ -1,6 +1,7 @@
 # 该服务开放的端口号
 server:
     port: 5000
-spring:
-    application:
-        name:  hystrix-dashboard
+#eureka:
+#    client:
+#        serviceUrl:
+#            defaultZone: http://discovery:1000/eureka/

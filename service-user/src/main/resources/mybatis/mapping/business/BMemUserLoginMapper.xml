@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.business.BMemUserLoginMapper">
+    <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TMemUserLogin">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+        <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+        <result column="PASSWORD_SALT" jdbcType="VARCHAR" property="passwordSalt" />
+        <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+        <result column="USER_LEVEL" jdbcType="TINYINT" property="userLevel" />
+        <result column="USER_ROLE" jdbcType="TINYINT" property="userRole" />
+        <result column="LOGIN_TIME" jdbcType="TIMESTAMP" property="loginTime" />
+        <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        USER_ID, PHONE, PASSWORD, PASSWORD_SALT, EMAIL, USER_NAME, USER_LEVEL, USER_ROLE,
+        LOGIN_TIME, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+    </sql>
+    <select id="getSaltByEmail" resultType="java.lang.String" parameterType="java.lang.String">
+        select PASSWORD_SALT from ${db.shine}.mem_user_login where EMAIL = #{email,jdbcType=VARCHAR}
+    </select>
+    <update id="resetPassword">
+        UPDATE ${db.shine}.mem_user_login SET PASSWORD = #{password,jdbcType=VARCHAR}, PASSWORD_SALT = #{salt,jdbcType=VARCHAR}
+        WHERE EMAIL = #{email,jdbcType=VARCHAR}
+    </update>
+</mapper>

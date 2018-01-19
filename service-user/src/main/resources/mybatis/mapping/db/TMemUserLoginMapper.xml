@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.db.TMemUserLoginMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TMemUserLogin">
+    <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="PASSWORD_SALT" jdbcType="VARCHAR" property="passwordSalt" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_LEVEL" jdbcType="TINYINT" property="userLevel" />
+    <result column="USER_ROLE" jdbcType="TINYINT" property="userRole" />
+    <result column="LOGIN_TIME" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_ID, PHONE, PASSWORD, PASSWORD_SALT, EMAIL, USER_NAME, USER_LEVEL, USER_ROLE, 
+    LOGIN_TIME, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.mem_user_login
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.mem_user_login
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TMemUserLogin">
+    insert into ${db.shine}.mem_user_login (USER_ID, PHONE, PASSWORD, 
+      PASSWORD_SALT, EMAIL, USER_NAME, 
+      USER_LEVEL, USER_ROLE, LOGIN_TIME, 
+      MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
+      CREATE_TIME, DEL_FLAG)
+    values (#{userId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{passwordSalt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userLevel,jdbcType=TINYINT}, #{userRole,jdbcType=TINYINT}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{modifierUserName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{creatorUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TMemUserLogin">
+    insert into ${db.shine}.mem_user_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="passwordSalt != null">
+        PASSWORD_SALT,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL,
+      </if>
+      <if test="userRole != null">
+        USER_ROLE,
+      </if>
+      <if test="loginTime != null">
+        LOGIN_TIME,
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSalt != null">
+        #{passwordSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        #{userLevel,jdbcType=TINYINT},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=TINYINT},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifierUserName != null">
+        #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TMemUserLogin">
+    update ${db.shine}.mem_user_login
+    <set>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSalt != null">
+        PASSWORD_SALT = #{passwordSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL = #{userLevel,jdbcType=TINYINT},
+      </if>
+      <if test="userRole != null">
+        USER_ROLE = #{userRole,jdbcType=TINYINT},
+      </if>
+      <if test="loginTime != null">
+        LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TMemUserLogin">
+    update ${db.shine}.mem_user_login
+    set PHONE = #{phone,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      PASSWORD_SALT = #{passwordSalt,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_LEVEL = #{userLevel,jdbcType=TINYINT},
+      USER_ROLE = #{userRole,jdbcType=TINYINT},
+      LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TMemUserLogin">
+    update ${db.shine}.mem_user_login set del_flag='2' where USER_ID = #{userId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.mem_user_login
+    <set>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSalt != null">
+        PASSWORD_SALT = #{passwordSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL = #{userLevel,jdbcType=TINYINT},
+      </if>
+      <if test="userRole != null">
+        USER_ROLE = #{userRole,jdbcType=TINYINT},
+      </if>
+      <if test="loginTime != null">
+        LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.USER_ID, T.PHONE, T.PASSWORD, T.PASSWORD_SALT, T.EMAIL, T.USER_NAME, T.USER_LEVEL, 
+    T.USER_ROLE, T.LOGIN_TIME, T.MODIFIER_USER_NAME, T.MODIFY_TIME, T.CREATOR_USER_NAME, 
+    T.CREATE_TIME, T.DEL_FLAG
+  </sql>
+</mapper>

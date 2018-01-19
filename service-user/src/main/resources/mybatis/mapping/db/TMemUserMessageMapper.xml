@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.db.TMemUserMessageMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TMemUserMessage">
+    <id column="MESSAGE_ID" jdbcType="BIGINT" property="messageId" />
+    <result column="MESSAGE_CONTENT" jdbcType="VARCHAR" property="messageContent" />
+    <result column="SEND_USER_ID" jdbcType="BIGINT" property="sendUserId" />
+    <result column="SEND_USER_NAME" jdbcType="VARCHAR" property="sendUserName" />
+    <result column="RECEIVE_USER_ID" jdbcType="BIGINT" property="receiveUserId" />
+    <result column="RECEIVE_USER_NAME" jdbcType="VARCHAR" property="receiveUserName" />
+    <result column="SEND_MESSAGE_TIME" jdbcType="TIMESTAMP" property="sendMessageTime" />
+    <result column="MESSAGE_IS_READ" jdbcType="TINYINT" property="messageIsRead" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MESSAGE_ID, MESSAGE_CONTENT, SEND_USER_ID, SEND_USER_NAME, RECEIVE_USER_ID, RECEIVE_USER_NAME, 
+    SEND_MESSAGE_TIME, MESSAGE_IS_READ, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
+    CREATE_TIME, DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.mem_user_message
+    where MESSAGE_ID = #{messageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.mem_user_message
+    where MESSAGE_ID = #{messageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TMemUserMessage">
+    insert into ${db.shine}.mem_user_message (MESSAGE_ID, MESSAGE_CONTENT, SEND_USER_ID, 
+      SEND_USER_NAME, RECEIVE_USER_ID, RECEIVE_USER_NAME, 
+      SEND_MESSAGE_TIME, MESSAGE_IS_READ, MODIFIER_USER_NAME, 
+      MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, 
+      DEL_FLAG)
+    values (#{messageId,jdbcType=BIGINT}, #{messageContent,jdbcType=VARCHAR}, #{sendUserId,jdbcType=BIGINT}, 
+      #{sendUserName,jdbcType=VARCHAR}, #{receiveUserId,jdbcType=BIGINT}, #{receiveUserName,jdbcType=VARCHAR}, 
+      #{sendMessageTime,jdbcType=TIMESTAMP}, #{messageIsRead,jdbcType=TINYINT}, #{modifierUserName,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{creatorUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TMemUserMessage">
+    insert into ${db.shine}.mem_user_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        MESSAGE_ID,
+      </if>
+      <if test="messageContent != null">
+        MESSAGE_CONTENT,
+      </if>
+      <if test="sendUserId != null">
+        SEND_USER_ID,
+      </if>
+      <if test="sendUserName != null">
+        SEND_USER_NAME,
+      </if>
+      <if test="receiveUserId != null">
+        RECEIVE_USER_ID,
+      </if>
+      <if test="receiveUserName != null">
+        RECEIVE_USER_NAME,
+      </if>
+      <if test="sendMessageTime != null">
+        SEND_MESSAGE_TIME,
+      </if>
+      <if test="messageIsRead != null">
+        MESSAGE_IS_READ,
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        #{messageId,jdbcType=BIGINT},
+      </if>
+      <if test="messageContent != null">
+        #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null">
+        #{sendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sendUserName != null">
+        #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null">
+        #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveUserName != null">
+        #{receiveUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessageTime != null">
+        #{sendMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageIsRead != null">
+        #{messageIsRead,jdbcType=TINYINT},
+      </if>
+      <if test="modifierUserName != null">
+        #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TMemUserMessage">
+    update ${db.shine}.mem_user_message
+    <set>
+      <if test="messageContent != null">
+        MESSAGE_CONTENT = #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null">
+        SEND_USER_ID = #{sendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sendUserName != null">
+        SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null">
+        RECEIVE_USER_ID = #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveUserName != null">
+        RECEIVE_USER_NAME = #{receiveUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessageTime != null">
+        SEND_MESSAGE_TIME = #{sendMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageIsRead != null">
+        MESSAGE_IS_READ = #{messageIsRead,jdbcType=TINYINT},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where MESSAGE_ID = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TMemUserMessage">
+    update ${db.shine}.mem_user_message
+    set MESSAGE_CONTENT = #{messageContent,jdbcType=VARCHAR},
+      SEND_USER_ID = #{sendUserId,jdbcType=BIGINT},
+      SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      RECEIVE_USER_ID = #{receiveUserId,jdbcType=BIGINT},
+      RECEIVE_USER_NAME = #{receiveUserName,jdbcType=VARCHAR},
+      SEND_MESSAGE_TIME = #{sendMessageTime,jdbcType=TIMESTAMP},
+      MESSAGE_IS_READ = #{messageIsRead,jdbcType=TINYINT},
+      MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where MESSAGE_ID = #{messageId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TMemUserMessage">
+    update ${db.shine}.mem_user_message set del_flag='2' where MESSAGE_ID = #{messageId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.mem_user_message
+    <set>
+      <if test="messageContent != null">
+        MESSAGE_CONTENT = #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null">
+        SEND_USER_ID = #{sendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sendUserName != null">
+        SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null">
+        RECEIVE_USER_ID = #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveUserName != null">
+        RECEIVE_USER_NAME = #{receiveUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessageTime != null">
+        SEND_MESSAGE_TIME = #{sendMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageIsRead != null">
+        MESSAGE_IS_READ = #{messageIsRead,jdbcType=TINYINT},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where MESSAGE_ID = #{messageId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.MESSAGE_ID, T.MESSAGE_CONTENT, T.SEND_USER_ID, T.SEND_USER_NAME, T.RECEIVE_USER_ID, 
+    T.RECEIVE_USER_NAME, T.SEND_MESSAGE_TIME, T.MESSAGE_IS_READ, T.MODIFIER_USER_NAME, 
+    T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
+  </sql>
+</mapper>

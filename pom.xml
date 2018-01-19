@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.shine</groupId>
     <artifactId>shine</artifactId>
     <packaging>pom</packaging>
@@ -11,22 +10,27 @@
     <modules>
         <module>shine-server</module>
         <module>shine-cm</module>
-        <module>shine-service</module>
         <module>shine-web</module>
         <module>shine-turbine</module>
         <module>shine-hystrix-dashboard</module>
         <module>shine-zuul</module>
-        <module>shine-member</module>
+        <module>shine-user</module>
+        <module>shine-common</module>
+        <module>service-redis</module>
+        <module>service-user</module>
+        <module>service-forum</module>
+        <module>shine-admin</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
     </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <druid.version>1.1.2</druid.version>
+        <docker.image.prefix>shine</docker.image.prefix>
     </properties>
     <dependencies>
     </dependencies>

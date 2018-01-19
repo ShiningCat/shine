@@ -2,16 +2,14 @@
 server:
     port: 2000
 
-# 指定发布的微服务名（以后调用时，只需该名称即可访问该服务）
+# mariaDB + druid数据源 配置
 spring:
-    application:
-        name: shine-service
     datasource:
-        name: xxx
+        name: shine
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://172.0.0.1?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://101.132.142.239?useUnicode=true&characterEncoding=UTF-8&useSSL=false
         username: root
-        password: root
+        password: zhaitonghui12138!
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
         filters: stat
@@ -35,7 +33,17 @@ spring:
         test-on-return: false
         pool-prepared-statements: true
         max-open-prepared-statements: 20
-
+    #redis
+    redis:
+        host: 101.132.142.239
+        password: zhaitonghui12138!
+        port: 6379
+        timeout: 3000
+        pool:
+            maxTotal: 10
+            maxIdle: 5
+            minIdle: 1
+            testOnBorrow: true
 eureka:
     instance:
         instance-id: ${spring.application.name}:${server.port}
@@ -50,7 +58,21 @@ eureka:
         #healthcheck:
         #    enabled: true
         # 指定服务注册中心的地址
+#        registerWithEureka: true
+#        fetchRegistry: false
         serviceUrl:
-            defaultZone: http://127.0.0.1:1000/eureka/
+            defaultZone: http://discovery:1000/eureka/
 mybatis:
-    mapper-locations: classpath:/mybatis/mapping/*Mapper.xml
+#    type-aliases-package: com.shine.cm.common.bean
+    mapper-locations: classpath:/mybatis/mapping/**/*.xml
+    configLocation: classpath:/mybatis-config.xml
+
+mapper:
+#    mappers: com.shine.service.util.MyMapper
+    not-empty: false
+    identity: MYSQL
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

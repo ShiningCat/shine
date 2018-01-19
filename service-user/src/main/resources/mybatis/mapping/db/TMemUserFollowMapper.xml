@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.db.TMemUserFollowMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TMemUserFollow">
+    <id column="FOLLOW_ID" jdbcType="BIGINT" property="followId" />
+    <result column="FOLLOWERS_USER_ID" jdbcType="BIGINT" property="followersUserId" />
+    <result column="FOLLOW_USER_ID" jdbcType="BIGINT" property="followUserId" />
+    <result column="FOLLOW_EACH_OTHER" jdbcType="TINYINT" property="followEachOther" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FOLLOW_ID, FOLLOWERS_USER_ID, FOLLOW_USER_ID, FOLLOW_EACH_OTHER, MODIFIER_USER_NAME, 
+    MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.mem_user_follow
+    where FOLLOW_ID = #{followId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.mem_user_follow
+    where FOLLOW_ID = #{followId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TMemUserFollow">
+    insert into ${db.shine}.mem_user_follow (FOLLOW_ID, FOLLOWERS_USER_ID, FOLLOW_USER_ID, 
+      FOLLOW_EACH_OTHER, MODIFIER_USER_NAME, MODIFY_TIME, 
+      CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+      )
+    values (#{followId,jdbcType=BIGINT}, #{followersUserId,jdbcType=BIGINT}, #{followUserId,jdbcType=BIGINT}, 
+      #{followEachOther,jdbcType=TINYINT}, #{modifierUserName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{creatorUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TMemUserFollow">
+    insert into ${db.shine}.mem_user_follow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="followId != null">
+        FOLLOW_ID,
+      </if>
+      <if test="followersUserId != null">
+        FOLLOWERS_USER_ID,
+      </if>
+      <if test="followUserId != null">
+        FOLLOW_USER_ID,
+      </if>
+      <if test="followEachOther != null">
+        FOLLOW_EACH_OTHER,
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="followId != null">
+        #{followId,jdbcType=BIGINT},
+      </if>
+      <if test="followersUserId != null">
+        #{followersUserId,jdbcType=BIGINT},
+      </if>
+      <if test="followUserId != null">
+        #{followUserId,jdbcType=BIGINT},
+      </if>
+      <if test="followEachOther != null">
+        #{followEachOther,jdbcType=TINYINT},
+      </if>
+      <if test="modifierUserName != null">
+        #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TMemUserFollow">
+    update ${db.shine}.mem_user_follow
+    <set>
+      <if test="followersUserId != null">
+        FOLLOWERS_USER_ID = #{followersUserId,jdbcType=BIGINT},
+      </if>
+      <if test="followUserId != null">
+        FOLLOW_USER_ID = #{followUserId,jdbcType=BIGINT},
+      </if>
+      <if test="followEachOther != null">
+        FOLLOW_EACH_OTHER = #{followEachOther,jdbcType=TINYINT},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where FOLLOW_ID = #{followId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TMemUserFollow">
+    update ${db.shine}.mem_user_follow
+    set FOLLOWERS_USER_ID = #{followersUserId,jdbcType=BIGINT},
+      FOLLOW_USER_ID = #{followUserId,jdbcType=BIGINT},
+      FOLLOW_EACH_OTHER = #{followEachOther,jdbcType=TINYINT},
+      MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where FOLLOW_ID = #{followId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TMemUserFollow">
+    update ${db.shine}.mem_user_follow set del_flag='2' where FOLLOW_ID = #{followId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.mem_user_follow
+    <set>
+      <if test="followersUserId != null">
+        FOLLOWERS_USER_ID = #{followersUserId,jdbcType=BIGINT},
+      </if>
+      <if test="followUserId != null">
+        FOLLOW_USER_ID = #{followUserId,jdbcType=BIGINT},
+      </if>
+      <if test="followEachOther != null">
+        FOLLOW_EACH_OTHER = #{followEachOther,jdbcType=TINYINT},
+      </if>
+      <if test="modifierUserName != null">
+        MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorUserName != null">
+        CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FOLLOW_ID = #{followId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.FOLLOW_ID, T.FOLLOWERS_USER_ID, T.FOLLOW_USER_ID, T.FOLLOW_EACH_OTHER, T.MODIFIER_USER_NAME, 
+    T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
+  </sql>
+</mapper>

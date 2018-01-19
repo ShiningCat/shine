@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.forum.mapper.business.topic.BForumTopicInfoMapper">
+    <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TForumTopicInfo">
+        <id column="TOPIC_ID" jdbcType="BIGINT" property="topicId" />
+        <result column="TOPIC_NAME" jdbcType="VARCHAR" property="topicName" />
+        <result column="TOPIC_USER_ID" jdbcType="BIGINT" property="topicUserId" />
+        <result column="TOPIC_USER_NAME" jdbcType="VARCHAR" property="topicUserName" />
+        <result column="TOPIC_IMAGE" jdbcType="VARCHAR" property="topicImage" />
+        <result column="TOPIC_CONTENT" jdbcType="VARCHAR" property="topicContent" />
+        <result column="TOPIC_THEME_NUMBER" jdbcType="INTEGER" property="topicThemeNumber" />
+        <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        TOPIC_ID, TOPIC_NAME, TOPIC_USER_ID, TOPIC_USER_NAME, TOPIC_IMAGE, TOPIC_CONTENT,
+        TOPIC_THEME_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME,
+        DEL_FLAG
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM shine.forum_topic_info
+    </select>
+    <sql id="BaseColumnAlias">
+        T.TOPIC_ID, T.TOPIC_NAME, T.TOPIC_USER_ID, T.TOPIC_USER_NAME, T.TOPIC_IMAGE, T.TOPIC_CONTENT,
+        T.TOPIC_THEME_NUMBER, T.MODIFIER_USER_NAME, T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME,
+        T.DEL_FLAG
+    </sql>
+</mapper>

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
@@ -27,8 +26,9 @@ import javax.annotation.Resource;
  */
 @EnableHystrix
 @EnableFeignClients
+@EnableEurekaClient
 @SpringBootApplication
-@ComponentScan(basePackages ="com.shine.web")
+//@ComponentScan(basePackages ="com.shine.web")
 @ServletComponentScan
 @EnableRedisHttpSession
 public class ShineWebAppliction {
