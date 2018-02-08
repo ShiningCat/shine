@@ -2,16 +2,6 @@
 server:
     port: 2002
     context-path: /api
-spring:
-    redis:
-        host: 101.132.142.239
-        password: zhaitonghui12138!
-        post: 6379
-        pool:
-            maxTotal: 5
-            maxIdle: 2
-            minIdle: 1
-            testOnBorrow: true
 
 # 好像使用feign 断路器不会默认打开 要设置一下
 feign:

@@ -6,9 +6,9 @@ spring:
     datasource:
         name: shine
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://101.132.142.239?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://192.168.99.100?useUnicode=true&characterEncoding=UTF-8&useSSL=false
         username: root
-        password: zhaitonghui12138!
+        password: root
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
         filters: stat

@@ -13,6 +13,7 @@
     <result column="THEME_NUMBER" jdbcType="INTEGER" property="themeNumber" />
     <result column="REPLY_NUMBER" jdbcType="INTEGER" property="replyNumber" />
     <result column="COMMENT_NUMBER" jdbcType="INTEGER" property="commentNumber" />
+    <result column="USER_PRIVACY" jdbcType="TINYINT" property="userPrivacy" />
     <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
@@ -21,7 +22,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     USER_ID, USER_NAME, SEX, USER_AVATAR, PHONE, EMAIL, INTRODUCE, USER_LEVEL, THEME_NUMBER, 
-    REPLY_NUMBER, COMMENT_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
+    REPLY_NUMBER, COMMENT_NUMBER, USER_PRIVACY, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
     CREATE_TIME, DEL_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -38,15 +39,15 @@
     insert into ${db.shine}.mem_user_info (USER_ID, USER_NAME, SEX, 
       USER_AVATAR, PHONE, EMAIL, 
       INTRODUCE, USER_LEVEL, THEME_NUMBER, 
-      REPLY_NUMBER, COMMENT_NUMBER, MODIFIER_USER_NAME, 
-      MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, 
-      DEL_FLAG)
+      REPLY_NUMBER, COMMENT_NUMBER, USER_PRIVACY, 
+      MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME, 
+      CREATE_TIME, DEL_FLAG)
     values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{userAvatar,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{introduce,jdbcType=VARCHAR}, #{userLevel,jdbcType=TINYINT}, #{themeNumber,jdbcType=INTEGER}, 
-      #{replyNumber,jdbcType=INTEGER}, #{commentNumber,jdbcType=INTEGER}, #{modifierUserName,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{creatorUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{delFlag,jdbcType=TINYINT})
+      #{replyNumber,jdbcType=INTEGER}, #{commentNumber,jdbcType=INTEGER}, #{userPrivacy,jdbcType=TINYINT}, 
+      #{modifierUserName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{creatorUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TMemUserInfo">
     insert into ${db.shine}.mem_user_info
@@ -83,6 +84,9 @@
       </if>
       <if test="commentNumber != null">
         COMMENT_NUMBER,
+      </if>
+      <if test="userPrivacy != null">
+        USER_PRIVACY,
       </if>
       <if test="modifierUserName != null">
         MODIFIER_USER_NAME,
@@ -134,6 +138,9 @@
       <if test="commentNumber != null">
         #{commentNumber,jdbcType=INTEGER},
       </if>
+      <if test="userPrivacy != null">
+        #{userPrivacy,jdbcType=TINYINT},
+      </if>
       <if test="modifierUserName != null">
         #{modifierUserName,jdbcType=VARCHAR},
       </if>
@@ -184,6 +191,9 @@
       <if test="commentNumber != null">
         COMMENT_NUMBER = #{commentNumber,jdbcType=INTEGER},
       </if>
+      <if test="userPrivacy != null">
+        USER_PRIVACY = #{userPrivacy,jdbcType=TINYINT},
+      </if>
       <if test="modifierUserName != null">
         MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
       </if>
@@ -214,6 +224,7 @@
       THEME_NUMBER = #{themeNumber,jdbcType=INTEGER},
       REPLY_NUMBER = #{replyNumber,jdbcType=INTEGER},
       COMMENT_NUMBER = #{commentNumber,jdbcType=INTEGER},
+      USER_PRIVACY = #{userPrivacy,jdbcType=TINYINT},
       MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
       CREATOR_USER_NAME = #{creatorUserName,jdbcType=VARCHAR},
@@ -260,6 +271,9 @@
       <if test="commentNumber != null">
         COMMENT_NUMBER = #{commentNumber,jdbcType=INTEGER},
       </if>
+      <if test="userPrivacy != null">
+        USER_PRIVACY = #{userPrivacy,jdbcType=TINYINT},
+      </if>
       <if test="modifierUserName != null">
         MODIFIER_USER_NAME = #{modifierUserName,jdbcType=VARCHAR},
       </if>
@@ -277,7 +291,7 @@
   </sql>
   <sql id="BaseColumnAlias">
     T.USER_ID, T.USER_NAME, T.SEX, T.USER_AVATAR, T.PHONE, T.EMAIL, T.INTRODUCE, T.USER_LEVEL, 
-    T.THEME_NUMBER, T.REPLY_NUMBER, T.COMMENT_NUMBER, T.MODIFIER_USER_NAME, T.MODIFY_TIME, 
-    T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
+    T.THEME_NUMBER, T.REPLY_NUMBER, T.COMMENT_NUMBER, T.USER_PRIVACY, T.MODIFIER_USER_NAME, 
+    T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
   </sql>
 </mapper>

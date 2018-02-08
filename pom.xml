@@ -19,7 +19,6 @@
         <module>service-redis</module>
         <module>service-user</module>
         <module>service-forum</module>
-        <module>shine-admin</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

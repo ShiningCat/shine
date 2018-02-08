@@ -9,4 +9,6 @@ public interface ThemeService {
     public ResultDO<PageBean<BForumThemeInfo>> themes(Integer pageNum, Long topicId);
 
     public ResultDO<Boolean> postTheme (TForumThemeInfo themeInfo);
+
+    public ResultDO<BForumThemeInfo> theme(Long themeId);
 }

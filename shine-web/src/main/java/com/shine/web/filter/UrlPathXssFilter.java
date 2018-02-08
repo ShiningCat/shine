@@ -1,10 +1,15 @@
 package com.shine.web.filter;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.util.HtmlUtils;
 import org.springframework.web.util.UrlPathHelper;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+
+/**
+ * 在XssHttpServletRequestWrapper getParameterValues() 似乎也可以做到同样的url 参数过滤
+ */
 
 public class UrlPathXssFilter extends UrlPathHelper {
 

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.db.TMemUserFavoriteMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TMemUserFavorite">
+    <id column="FAVORITE_ID" jdbcType="BIGINT" property="favoriteId" />
+    <result column="FAVORITE_USER_ID" jdbcType="BIGINT" property="favoriteUserId" />
+    <result column="FAVORITE_THEME_ID" jdbcType="BIGINT" property="favoriteThemeId" />
+    <result column="FAVORITE_TIME" jdbcType="TIMESTAMP" property="favoriteTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FAVORITE_ID, FAVORITE_USER_ID, FAVORITE_THEME_ID, FAVORITE_TIME, MODIFY_TIME, DEL_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${db.shine}.mem_user_favorite
+    where FAVORITE_ID = #{favoriteId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ${db.shine}.mem_user_favorite
+    where FAVORITE_ID = #{favoriteId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.shine.cm.common.bean.db.TMemUserFavorite">
+    insert into ${db.shine}.mem_user_favorite (FAVORITE_ID, FAVORITE_USER_ID, FAVORITE_THEME_ID, 
+      FAVORITE_TIME, MODIFY_TIME, DEL_FLAG
+      )
+    values (#{favoriteId,jdbcType=BIGINT}, #{favoriteUserId,jdbcType=BIGINT}, #{favoriteThemeId,jdbcType=BIGINT}, 
+      #{favoriteTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shine.cm.common.bean.db.TMemUserFavorite">
+    insert into ${db.shine}.mem_user_favorite
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="favoriteId != null">
+        FAVORITE_ID,
+      </if>
+      <if test="favoriteUserId != null">
+        FAVORITE_USER_ID,
+      </if>
+      <if test="favoriteThemeId != null">
+        FAVORITE_THEME_ID,
+      </if>
+      <if test="favoriteTime != null">
+        FAVORITE_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="favoriteId != null">
+        #{favoriteId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteUserId != null">
+        #{favoriteUserId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteThemeId != null">
+        #{favoriteThemeId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteTime != null">
+        #{favoriteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shine.cm.common.bean.db.TMemUserFavorite">
+    update ${db.shine}.mem_user_favorite
+    <set>
+      <if test="favoriteUserId != null">
+        FAVORITE_USER_ID = #{favoriteUserId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteThemeId != null">
+        FAVORITE_THEME_ID = #{favoriteThemeId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteTime != null">
+        FAVORITE_TIME = #{favoriteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where FAVORITE_ID = #{favoriteId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shine.cm.common.bean.db.TMemUserFavorite">
+    update ${db.shine}.mem_user_favorite
+    set FAVORITE_USER_ID = #{favoriteUserId,jdbcType=BIGINT},
+      FAVORITE_THEME_ID = #{favoriteThemeId,jdbcType=BIGINT},
+      FAVORITE_TIME = #{favoriteTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      DEL_FLAG = #{delFlag,jdbcType=TINYINT}
+    where FAVORITE_ID = #{favoriteId,jdbcType=BIGINT}
+  </update>
+  <select id="getSystemTime" resultType="java.util.Date">
+    select now() 
+  </select>
+  <update id="logicDelete" parameterType="com.shine.cm.common.bean.db.TMemUserFavorite">
+    update ${db.shine}.mem_user_favorite set del_flag='2' where FAVORITE_ID = #{favoriteId,jdbcType=BIGINT}
+  </update>
+  <sql id="updateDataByKey">
+    update ${db.shine}.mem_user_favorite
+    <set>
+      <if test="favoriteUserId != null">
+        FAVORITE_USER_ID = #{favoriteUserId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteThemeId != null">
+        FAVORITE_THEME_ID = #{favoriteThemeId,jdbcType=BIGINT},
+      </if>
+      <if test="favoriteTime != null">
+        FAVORITE_TIME = #{favoriteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FAVORITE_ID = #{favoriteId,jdbcType=BIGINT}
+  </sql>
+  <sql id="BaseColumnAlias">
+    T.FAVORITE_ID, T.FAVORITE_USER_ID, T.FAVORITE_THEME_ID, T.FAVORITE_TIME, T.MODIFY_TIME, 
+    T.DEL_FLAG
+  </sql>
+</mapper>

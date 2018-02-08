@@ -1,6 +1,7 @@
 package com.shine.user.action.user;
 
-import com.shine.cm.common.bean.db.TForumThemeInfo;
+import com.shine.cm.common.bean.business.user.UserFavoriteInfo;
+import com.shine.cm.common.bean.db.TMemUserFavorite;
 import com.shine.cm.common.bean.db.TMemUserInfo;
 import com.shine.cm.common.bean.db.TMemUserLogin;
 import com.shine.cm.service.redis.IRedisService;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
+@RequestMapping(value = "/users")
 public class UserAction {
 
     @Autowired
@@ -44,13 +46,7 @@ public class UserAction {
     @Autowired
     private BMemUserInfoMapper bMemUserInfoMapper;
 
-    @RequestMapping(value = "/{userId}/themes",method = RequestMethod.GET)
-    ResultDO<PageBean<TForumThemeInfo>> getUserThemes(@PathVariable Long userId, @RequestParam Integer limit, @RequestParam Integer page){
-
-        return userService.getUserThemes(userId,limit,page);
-    }
-
-    @RequestMapping(value = "/creation" ,method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     ResultDO<TMemUserInfo> creationUser(@RequestBody TMemUserLogin userLoginBean){
         return userService.createUser(userLoginBean);
     }
@@ -70,7 +66,7 @@ public class UserAction {
      * @param email
      * @return
      */
-    @RequestMapping(value = "/reset-password/mail" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/update_password/mail" ,method = RequestMethod.POST)
     ResultDO<Boolean> sendMsg (@RequestParam String email){
         TMemUserInfo userInfo = bMemUserInfoMapper.selectByEmail(email);
         if(userInfo == null){
@@ -97,7 +93,7 @@ public class UserAction {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/reset-password/{code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update_password/{code}", method = RequestMethod.GET)
     ResultDO<String> restPassword(@PathVariable String code){
         RedisBean redisBean = redisFeign.getRedis("password:reset:" + code);
         if(redisBean == null || redisBean.getValue() == null ){
@@ -110,7 +106,7 @@ public class UserAction {
      * 重置密码提交
      * @return
      */
-    @RequestMapping(value = "/reset-password" , method = RequestMethod.POST)
+    @RequestMapping(value = "/update_password" , method = RequestMethod.POST)
     ResultDO<String> resetPassword(@RequestParam String code, @RequestParam String password ){
         RedisBean redisBean = redisFeign.getRedis("password:reset:" + code);
         if(redisBean == null || redisBean.getValue() == null ){
@@ -121,6 +117,17 @@ public class UserAction {
             Boolean flag = redisFeign.delRedis("password:reset:" + code);
         }
         return re;
+    }
+
+    @GetMapping(value = "/{userId}")
+    ResultDO<TMemUserInfo> getUser(@PathVariable(value = "userId")  Long userId){
+
+        return userService.getUser(userId);
+    }
+    @GetMapping(value = "/{userId}/favorites")
+    ResultDO<PageBean<UserFavoriteInfo>> getFavorites(@PathVariable(value = "userId")  Long userId, @RequestParam Integer limit, @RequestParam Integer page){
+
+        return userService.getFavorites(userId,limit,page);
     }
 
 }

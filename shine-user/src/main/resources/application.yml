@@ -30,6 +30,14 @@ eureka:
 # 解决Spring Cloud中Feign/Ribbon第一次请求失败的方法, Hystrix默认的超时时间是1秒如果超过这个时间尚未响应，
 # 将会进入fallback代码。而首次请求往往会比较慢（因为Spring的懒加载机制，要实例化一些类）
 # hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 3000 # 设置超时时间为3秒
+logging:
+    level:
+        org:
+            springframework:
+                web: DEBUG
+        com:
+            shine:
+                user: DEBUG
 hystrix:
     command:
         default:

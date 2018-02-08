@@ -10,3 +10,4 @@ target/
 shine-admin/
 shine-service/
 *.iml
+/.gitignore

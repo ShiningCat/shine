@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "service-forum")
 public interface TopicFeignClient {
-    @RequestMapping(value = "/topic", method = RequestMethod.GET)
+    @RequestMapping(value = "/topics", method = RequestMethod.GET)
     ResultDO<PageBean<TForumTopicInfo>> topics(@RequestParam(value = "limit") Integer limit, @RequestParam(value = "page") Integer page);
 
-    @RequestMapping(value = "/topic/{topicId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/topics/{topicId}", method = RequestMethod.GET)
     ResultDO<TForumTopicInfo> topic(@PathVariable(value = "topicId") Long topicId);
 }

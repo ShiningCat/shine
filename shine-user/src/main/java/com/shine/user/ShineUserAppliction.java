@@ -1,11 +1,14 @@
 package com.shine.user;
 
+import com.shine.user.filter.CorsFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 
@@ -23,27 +26,21 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
-//@ComponentScan(basePackages ="com.shine.user")
 @ServletComponentScan
 public class ShineUserAppliction {
 
-//	@Bean
-//	@LoadBalanced
-//	public RestTemplate restTemplate(){
-//		return new RestTemplate();
-//	}
 	public static void main(String[] args) {
 		SpringApplication.run(ShineUserAppliction.class, args);
 	}
 
-
-//	@Autowired
-//	private RequestListener requestListener;
-//
-//	@Bean
-//	public ServletListenerRegistrationBean<RequestListener> servletListenerRegistrationBean() {
-//		ServletListenerRegistrationBean<RequestListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
-//		servletListenerRegistrationBean.setListener(requestListener);
-//		return servletListenerRegistrationBean;
-//	}
+	@Bean
+	public FilterRegistrationBean someFilterRegistration() {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		registration.setFilter(new CorsFilter());
+		registration.addUrlPatterns("/*");
+		registration.addInitParameter("paramName", "paramValue");
+		registration.setName("CorsFilter");
+		registration.setOrder(1);
+		return registration;
+	}
 }

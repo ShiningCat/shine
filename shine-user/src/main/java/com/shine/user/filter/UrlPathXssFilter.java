@@ -1,11 +1,13 @@
 package com.shine.user.filter;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.util.HtmlUtils;
 import org.springframework.web.util.UrlPathHelper;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@ComponentScan
 public class UrlPathXssFilter extends UrlPathHelper {
 
     @Override

@@ -42,7 +42,6 @@ public class ThemeServiceImpl extends BaseService implements ThemeService{
         if(themeInfo.getThemeContent().length() > 2000){
             return new ResultDO<>(false,"内容太长了哦");
         }
-        themeInfo.setThemeReplyNumber(1);
         themeInfo.setCreatorUserName(themeInfo.getThemeUserName());
         themeInfo.setModifierUserName(themeInfo.getThemeUserName());
         int i = tForumThemeInfoMapper.insertSelective(themeInfo);
@@ -51,5 +50,10 @@ public class ThemeServiceImpl extends BaseService implements ThemeService{
         } else {
             return new ResultDO<>(false,"发帖失败,请稍后重试");
         }
+    }
+
+    @Override
+    public ResultDO<BForumThemeInfo> theme(Long themeId) {
+        return new ResultDO<>(bForumThemeInfoMapper.getThemeById(themeId));
     }
 }

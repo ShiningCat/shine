@@ -63,6 +63,11 @@ public class TMemUserInfo implements Serializable {
     private Integer commentNumber;
 
     /**
+     * <p>隐私设置,0:开放,1:关闭 .</p>
+     */
+    private Byte userPrivacy;
+
+    /**
      * <p>修改人账号 .</p>
      */
     private String modifierUserName;
@@ -177,6 +182,14 @@ public class TMemUserInfo implements Serializable {
         this.commentNumber = commentNumber;
     }
 
+    public Byte getUserPrivacy() {
+        return userPrivacy;
+    }
+
+    public void setUserPrivacy(Byte userPrivacy) {
+        this.userPrivacy = userPrivacy;
+    }
+
     public String getModifierUserName() {
         return modifierUserName;
     }
@@ -234,6 +247,7 @@ public class TMemUserInfo implements Serializable {
         sb.append(", themeNumber=").append(themeNumber);
         sb.append(", replyNumber=").append(replyNumber);
         sb.append(", commentNumber=").append(commentNumber);
+        sb.append(", userPrivacy=").append(userPrivacy);
         sb.append(", modifierUserName=").append(modifierUserName);
         sb.append(", modifyTime=").append(modifyTime);
         sb.append(", creatorUserName=").append(creatorUserName);

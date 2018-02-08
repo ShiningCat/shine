@@ -1,10 +1,9 @@
 package com.shine.user.controller.user;
 
 import com.shine.cm.common.bean.business.token.Token;
-import com.shine.cm.common.bean.business.user.ForgotValidationBean;
-import com.shine.cm.common.bean.business.user.RePasswordVakidationBean;
-import com.shine.cm.common.bean.business.user.RegisterValidationBean;
+import com.shine.cm.common.bean.business.user.*;
 import com.shine.cm.common.bean.db.TForumThemeInfo;
+import com.shine.cm.common.bean.db.TMemUserFavorite;
 import com.shine.cm.common.bean.db.TMemUserInfo;
 import com.shine.cm.common.bean.db.TMemUserLogin;
 import com.shine.common.util.verification.CaptchaBean;
@@ -13,34 +12,40 @@ import com.shine.common.vo.ResultDO;
 import com.shine.user.controller.BaseController;
 import com.shine.user.controller.verification.VerifyCaptcha;
 import com.shine.user.feign.token.TokenFeign;
+import com.shine.user.feign.user.UserActivityFeign;
 import com.shine.user.feign.user.UserFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController extends BaseController {
 
     @Autowired
     private UserFeign userFeignClient;
 
     @Autowired
+    private UserActivityFeign userActivityFeign;
+
+    @Autowired
     private TokenFeign tokenFeignClient;
 
-    @GetMapping(value = "/{id}")
-    public ResultDO<TMemUserInfo> getUser(@PathVariable Long userId){
-
-        ResultDO<TMemUserInfo> result = new ResultDO<TMemUserInfo>();
-        result.getObj().setUserId(userId);
-        return result;
+    /**
+     * 获取用ID 为xx 的用户信息
+     * @param userId
+     * @return
+     */
+    @GetMapping(value = "/{userId}")
+    public ResultDO<TMemUserInfo> getUser(@PathVariable(value = "userId") Long userId){
+        return userFeignClient.getUser(userId);
     }
 
     /**
      * 创建用户
      * @return
      */
-    @PostMapping(value = "/creation")
+    @PostMapping
     public Object creationUser(RegisterValidationBean registerValidationBean){
         CaptchaBean captchaBean = new CaptchaBean();
         captchaBean.setGeetest_challenge(registerValidationBean.getGeetest_challenge());
@@ -65,7 +70,7 @@ public class UserController extends BaseController {
      * @param user
      * @return
      */
-    @PutMapping(value = "/{id}/edit")
+    @PutMapping(value = "/{id}")
     public Object editUser(@PathVariable Long userId, @RequestParam TMemUserInfo user){
 
         return "OK";
@@ -86,7 +91,7 @@ public class UserController extends BaseController {
      * @param  forgotValidationBean
      * @return
      */
-    @PostMapping(value = "/reset-password/mail")
+    @PostMapping(value = "/update_password/mail")
     public Object sendMsg (ForgotValidationBean forgotValidationBean){
         CaptchaBean captchaBean = new CaptchaBean();
         captchaBean.setGeetest_challenge(forgotValidationBean.getGeetest_challenge());
@@ -100,13 +105,12 @@ public class UserController extends BaseController {
         }
         return userFeignClient.sendMsg(forgotValidationBean.getEmail());
     }
-
     /**
-     * 找回密码页面
+     * 找回密码
      * @param code
      * @return
      */
-    @GetMapping(value = "/reset-password/{code}")
+    @GetMapping(value = "/update_password/{code}")
     public Object resetPassword(@PathVariable String code){
         return userFeignClient.resetPassword(code);
     }
@@ -115,7 +119,7 @@ public class UserController extends BaseController {
      * 重置密码提交
      * @return
      */
-    @PostMapping(value = "/reset-password")
+    @PutMapping(value = "/update_password")
     public Object updatePassword(RePasswordVakidationBean rePasswordVakidationBean ){
         CaptchaBean captchaBean = new CaptchaBean();
         captchaBean.setGeetest_challenge(rePasswordVakidationBean.getGeetest_challenge());
@@ -129,6 +133,12 @@ public class UserController extends BaseController {
         }
 //        RePasswordVakidationBean rePasswordVakidationBean = new RePasswordVakidationBean();
         return userFeignClient.resetPassword(rePasswordVakidationBean.getCode(),rePasswordVakidationBean.getPassword());
+    }
+
+
+    @GetMapping(value = "/{userId}/comments")
+    ResultDO<PageBean<UserCommentInfo>> getUserComments(@PathVariable Long userId, @RequestParam(defaultValue = "20") Integer limit, @RequestParam(value = "page", defaultValue = "1") Integer page){
+        return userActivityFeign.getUserComments(userId,limit,page);
     }
 
     /**
@@ -147,8 +157,22 @@ public class UserController extends BaseController {
      * @return
      */
     @GetMapping(value = "/{userId}/themes")
-    public ResultDO<PageBean<TForumThemeInfo>> getUserThemes(@PathVariable Long userId,@RequestParam(defaultValue = "20") Integer limit,@RequestParam(defaultValue = "1") Integer page){
-        return  userFeignClient.getUserThemes(userId,limit,page);
+    public ResultDO<PageBean<TForumThemeInfo>> getUserThemes(@PathVariable Long userId, @RequestParam(defaultValue = "20") Integer limit, @RequestParam(value = "page", defaultValue = "1") Integer page){
+        return  userActivityFeign.getUserThemes(userId,limit,page);
     }
 
+    /**
+     * 我的回复
+     * @param userId:用户 limit:每页数量 page:页码
+     * @return
+     */
+    @GetMapping(value = "/{userId}/reply")
+    public ResultDO<PageBean<UserReplyInfo>> getUserReply(@PathVariable Long userId, @RequestParam(defaultValue = "20") Integer limit, @RequestParam(value = "page", defaultValue = "1") Integer page){
+        return  userActivityFeign.getUserReply(userId,limit,page);
+    }
+
+    @GetMapping(value = "/{userId}/favorites")
+    public ResultDO<PageBean<UserFavoriteInfo>> getUserFavorites(@PathVariable Long userId, @RequestParam(defaultValue = "20") Integer limit, @RequestParam(value = "page", defaultValue = "1") Integer page){
+        return  userFeignClient.getFavorites(userId,limit,page);
+    }
 }

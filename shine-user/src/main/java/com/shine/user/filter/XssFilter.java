@@ -1,6 +1,7 @@
 package com.shine.user.filter;
 
-import org.springframework.context.annotation.ComponentScan;
+
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @WebFilter
+@AutoConfigureOrder(value = 1)
 public class XssFilter implements Filter {
     FilterConfig filterConfig = null;
 

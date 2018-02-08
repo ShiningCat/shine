@@ -14,13 +14,13 @@ public class TopicController extends BaseController{
     @Autowired
     private TopicFeignClient topicFeignClient;
 
-    @GetMapping(value = "/topic")
+    @GetMapping(value = "/topics")
     public Object topics(@RequestParam(defaultValue = "20") Integer limit, @RequestParam(defaultValue = "1") Integer page) {
 
         return topicFeignClient.topics(limit, page);
     }
 
-    @GetMapping(value = "/topic/{topicId}")
+    @GetMapping(value = "/topics/{topicId}")
     public Object topic(@PathVariable Long topicId) {
         return topicFeignClient.topic(topicId);
     }

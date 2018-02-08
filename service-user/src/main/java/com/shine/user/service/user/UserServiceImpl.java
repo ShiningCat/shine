@@ -1,14 +1,14 @@
 package com.shine.user.service.user;
 
 import com.github.pagehelper.PageHelper;
-import com.shine.cm.common.bean.db.TForumThemeInfo;
+import com.shine.cm.common.bean.business.user.UserFavoriteInfo;
+import com.shine.cm.common.bean.db.TMemUserFavorite;
 import com.shine.cm.common.bean.db.TMemUserInfo;
 import com.shine.cm.common.bean.db.TMemUserLogin;
 import com.shine.cm.service.user.UserService;
 import com.shine.common.entity.RedisBean;
 import com.shine.common.util.MD5;
 import com.shine.common.util.Regex;
-import com.shine.common.util.SerializeUtil;
 import com.shine.common.util.mailutil.Mail;
 import com.shine.common.util.mailutil.MailUtil;
 import com.shine.common.util.thread.ThreadFactory;
@@ -16,7 +16,7 @@ import com.shine.common.vo.PageBean;
 import com.shine.common.vo.ResultDO;
 
 import com.shine.user.fegin.RedisFeign;
-import com.shine.user.mapper.business.BForumThemeInfoMapper;
+import com.shine.user.mapper.business.BMemUserFavoriteMapper;
 import com.shine.user.mapper.business.BMemUserInfoMapper;
 import com.shine.user.mapper.business.BMemUserLoginMapper;
 import com.shine.user.mapper.db.TMemUserInfoMapper;
@@ -38,9 +38,6 @@ public class UserServiceImpl extends BaseService implements UserService {
     private RedisFeign redisFeign;
 
     @Autowired
-    private BForumThemeInfoMapper bForumThemeInfoMapper;
-
-    @Autowired
     private TMemUserLoginMapper tMemUserLoginMapper;
 
     @Autowired
@@ -52,6 +49,8 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Autowired
     private BMemUserInfoMapper bMemUserInfoMapper;
 
+    @Autowired
+    private BMemUserFavoriteMapper bMemUserFavoriteMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT, rollbackFor = { Exception.class })
@@ -133,13 +132,6 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
-    public ResultDO<PageBean<TForumThemeInfo>> getUserThemes(Long userId,Integer limit,Integer page) {
-        PageHelper.startPage(page, limit);
-        List<TForumThemeInfo> list = bForumThemeInfoMapper.selectByUserId(userId);
-        return new ResultDO<PageBean<TForumThemeInfo>>(new PageBean<>(list));
-    }
-
-    @Override
     public ResultDO<String> resetPassword(String email, String newPassword) {
         String salt = MD5.generateSalt();
         String password = MD5.md5WithSalt(newPassword,salt);
@@ -160,5 +152,17 @@ public class UserServiceImpl extends BaseService implements UserService {
             return new ResultDO<>(false,"验证失败!未知的错误");
         }
         return new ResultDO<>();
+    }
+
+    @Override
+    public ResultDO<TMemUserInfo> getUser(Long userId) {
+        return new ResultDO<>(tMemUserInfoMapper.selectByPrimaryKey(userId));
+    }
+
+    @Override
+    public ResultDO<PageBean<UserFavoriteInfo>> getFavorites(Long userId, Integer limit, Integer page) {
+        PageHelper.startPage(page, limit);
+        List<UserFavoriteInfo> list = bMemUserFavoriteMapper.getFavoriteByUserId(userId);
+        return new ResultDO<PageBean<UserFavoriteInfo>>(new PageBean<>(list));
     }
 }

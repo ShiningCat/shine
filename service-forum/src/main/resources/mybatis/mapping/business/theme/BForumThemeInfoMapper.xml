@@ -49,6 +49,28 @@
         ${db.shine}.mem_user_info user_info ON theme.THEME_USER_ID = user_info.USER_ID
         where THEME_TOPIC_ID = #{topicId,jdbcType=BIGINT} ORDER BY theme.MODIFY_TIME DESC
     </select>
+    <select id="selectMyThemePageList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${db.shine}.forum_theme_info
+        where THEME_USER_ID = #{userId,jdbcType=BIGINT} ORDER BY MODIFY_TIME DESC
+    </select>
+    <select id="getThemeById" resultMap="ExpandResultMap">
+        select
+        <include refid="Expand_Column_List" />
+        from ${db.shine}.forum_theme_info theme INNER JOIN
+        ${db.shine}.mem_user_info user_info ON theme.THEME_USER_ID = user_info.USER_ID
+        where THEME_ID = #{themeId,jdbcType=BIGINT}
+    </select>
+    <select id="getThemeByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from shine.forum_theme_info
+        where THEME_USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+    <select id="updateThemeReplyCount" parameterType="java.lang.Long">
+        UPDATE ${db.shine}.forum_theme_info SET THEME_REPLY_NUMBER = THEME_REPLY_NUMBER + 1 WHERE THEME_ID = #{themeId,jdbcType=BIGINT}
+    </select>
     <sql id="BaseColumnAlias">
         T.THEME_ID, T.THEME_TOPIC_ID, T.THEME_USER_ID, T.THEME_NAME, T.THEME_USER_NAME, T.THEME_CONTENT,
         T.THEME_REPLY_NUMBER, T.MODIFIER_USER_NAME, T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME,

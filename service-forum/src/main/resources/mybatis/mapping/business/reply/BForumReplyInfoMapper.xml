@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.forum.mapper.business.reply.BForumReplyInfoMapper">
+    <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TForumReplyInfo">
+        <id column="REPLY_ID" jdbcType="BIGINT" property="replyId" />
+        <result column="REPLY_THEME_ID" jdbcType="BIGINT" property="replyThemeId" />
+        <result column="REPLY_USER_ID" jdbcType="BIGINT" property="replyUserId" />
+        <result column="REPLY_USER_NAME" jdbcType="VARCHAR" property="replyUserName" />
+        <result column="REPLY_CONTENT" jdbcType="VARCHAR" property="replyContent" />
+        <result column="REPLY_TIME" jdbcType="TIMESTAMP" property="replyTime" />
+        <result column="REPLY_FLOOR" jdbcType="INTEGER" property="replyFloor" />
+        <result column="REPLY_COMMENT_NUMBER" jdbcType="INTEGER" property="replyCommentNumber" />
+        <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+    </resultMap>
+    <resultMap id="ExpandResultMap" type="com.shine.cm.common.bean.business.forum.BForumReplyInfo" extends="com.shine.forum.mapper.db.TForumReplyInfoMapper.BaseResultMap">
+        <result column="USER_AVATAR" jdbcType="VARCHAR" property="userAvatar" />
+        <result column="INTRODUCE" jdbcType="VARCHAR" property="introduce" />
+    </resultMap>
+    <resultMap id="UserReplyResultMap" type="com.shine.cm.common.bean.business.user.UserReplyInfo" extends="com.shine.forum.mapper.db.TForumReplyInfoMapper.BaseResultMap">
+        <result column="THEME_NAME" jdbcType="VARCHAR" property="themeName" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        REPLY_ID, REPLY_THEME_ID, REPLY_USER_ID, REPLY_USER_NAME, REPLY_CONTENT, REPLY_TIME,
+        REPLY_FLOOR, REPLY_COMMENT_NUMBER, MODIFIER_USER_NAME, MODIFY_TIME, CREATOR_USER_NAME,
+        CREATE_TIME, DEL_FLAG
+    </sql>
+    <sql id="Expand_Column_List">
+        REPLY_ID, REPLY_THEME_ID, REPLY_USER_ID, REPLY_USER_NAME, REPLY_CONTENT, REPLY_TIME,
+        REPLY_FLOOR, REPLY_COMMENT_NUMBER, reply.MODIFIER_USER_NAME, reply.MODIFY_TIME, reply.CREATOR_USER_NAME,
+        reply.CREATE_TIME, reply.DEL_FLAG,
+        user_info.USER_AVATAR,user_info.INTRODUCE
+    </sql>
+    <sql id="UserReply_Column_List">
+        REPLY_ID, REPLY_THEME_ID, REPLY_USER_ID, REPLY_USER_NAME, REPLY_CONTENT, REPLY_TIME,
+        REPLY_FLOOR, REPLY_COMMENT_NUMBER, reply.MODIFIER_USER_NAME, reply.MODIFY_TIME, reply.CREATOR_USER_NAME,
+        reply.CREATE_TIME, reply.DEL_FLAG,
+        theme.THEME_NAME
+    </sql>
+    <select id="selectReplyPageList" resultMap="ExpandResultMap"  >
+        select
+        <include refid="Expand_Column_List" />
+        from ${db.shine}.forum_reply_info reply INNER JOIN
+        ${db.shine}.mem_user_info user_info ON reply.REPLY_USER_ID = user_info.USER_ID
+        where REPLY_THEME_ID = #{themeId,jdbcType=BIGINT}
+    </select>
+    <select id="getReplyByUserId" resultMap="UserReplyResultMap">
+        SELECT <include refid="UserReply_Column_List" />
+        FROM ${db.shine}.forum_reply_info reply INNER JOIN ${db.shine}.forum_theme_info theme ON reply.REPLY_THEME_ID = theme.THEME_ID
+        WHERE reply.REPLY_USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+    <select id="selectReplyFloor" resultType="java.lang.Integer">
+        SELECT COUNT(REPLY_ID)+1 FROM ${db.shine}.forum_reply_info WHERE REPLY_THEME_ID = #{themeId,jdbcType=BIGINT}
+    </select>
+    <update id="updateReplyCommentCount" parameterType="java.lang.Long">
+        UPDATE ${db.shine}.forum_reply_info SET REPLY_COMMENT_NUMBER = REPLY_COMMENT_NUMBER + 1 WHERE REPLY_ID = #{replyId,jdbcType=BIGINT}
+    </update>
+</mapper>

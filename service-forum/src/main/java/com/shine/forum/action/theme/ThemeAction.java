@@ -16,13 +16,17 @@ public class ThemeAction {
     @Autowired
     private ThemeService themeService;
 
-    @GetMapping(value = "/theme")
-    public ResultDO<PageBean<BForumThemeInfo>> themes(@RequestParam(value = "page")Integer pageNum, @RequestParam(value = "topicId") Integer topicId ){
-        return themeService.themes(pageNum, topicId.longValue());
+    @GetMapping(value = "/themes")
+    public ResultDO<PageBean<BForumThemeInfo>> themes(@RequestParam(value = "page")Integer pageNum, @RequestParam(value = "topicId") Long topicId ){
+        return themeService.themes(pageNum, topicId);
     }
-    @PostMapping(value = "/theme")
+    @PostMapping(value = "/themes")
     ResultDO<Boolean> postTheme(@RequestBody TForumThemeInfo themeInfo){
-
         return themeService.postTheme(themeInfo);
+    }
+
+    @GetMapping(value = "/themes/{themeId}")
+    public ResultDO<BForumThemeInfo> theme(@PathVariable(value = "themeId") Long themeId){
+        return themeService.theme(themeId);
     }
 }

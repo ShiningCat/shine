@@ -3,16 +3,18 @@ package com.shine.user.controller.token;
 import com.shine.cm.common.bean.business.token.Token;
 
 import com.shine.cm.common.bean.business.user.LoginValidationBean;
+import com.shine.cm.common.bean.db.TMemUserInfo;
 import com.shine.common.util.verification.CaptchaBean;
 import com.shine.common.vo.ResultDO;
 import com.shine.user.controller.BaseController;
 import com.shine.user.controller.verification.VerifyCaptcha;
 import com.shine.user.feign.token.TokenFeign;
+import com.shine.user.util.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/token")
+@RequestMapping(value = "/tokens")
 public class TokenController extends BaseController {
 
     @Autowired
@@ -35,15 +37,22 @@ public class TokenController extends BaseController {
         if (!userCheck){
             return new ResultDO<Token>(false,"验证码验证失败,请重试");
         }
+
         ResultDO<Token> token = tokenFeignClient.login(loginTestBean.getEmail(),loginTestBean.getPassword());
+        if(token.getSuccess()){
+            TMemUserInfo userInfo = token.getObj().getUserInfo();
+            String accessToken = JwtHelper.createJWT(String.valueOf(userInfo.getUserId()), userInfo.getUserName());
+            token.getObj().setToken(accessToken);
+        }
         return token;
     }
 
-    @DeleteMapping
-    public Object logout(@RequestParam String token){
-        ResultDO<String> msg = tokenFeignClient.logout(token);
-        return msg;
-    }
+//    @DeleteMapping
+//    public ResultDO<String> logout(@RequestParam String token){
+//        if(JwtHelper.parseJWT(token) == null);
+//        ResultDO<String> msg = tokenFeignClient.logout(token);
+//        return msg;
+//    }
 
 
 }

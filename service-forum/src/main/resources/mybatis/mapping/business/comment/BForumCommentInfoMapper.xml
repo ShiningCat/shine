@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.forum.mapper.business.comment.BForumCommentInfoMapper">
+  <resultMap id="BaseResultMap" type="com.shine.cm.common.bean.db.TForumCommentInfo">
+    <id column="COMMENT_ID" jdbcType="BIGINT" property="commentId" />
+    <result column="COMMENT_REPLY_ID" jdbcType="BIGINT" property="commentReplyId" />
+    <result column="COMMENT_USER_ID" jdbcType="BIGINT" property="commentUserId" />
+    <result column="COMMENT_USER_NAME" jdbcType="VARCHAR" property="commentUserName" />
+    <result column="COMMENT_CONTENT" jdbcType="VARCHAR" property="commentContent" />
+    <result column="REPLY_SOMEONE" jdbcType="TINYINT" property="replySomeone" />
+    <result column="COMMENT_REPLY_USER_ID" jdbcType="BIGINT" property="commentReplyUserId" />
+    <result column="COMMENT_REPLY_USER_NAME" jdbcType="VARCHAR" property="commentReplyUserName" />
+    <result column="MODIFIER_USER_NAME" jdbcType="VARCHAR" property="modifierUserName" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="CREATOR_USER_NAME" jdbcType="VARCHAR" property="creatorUserName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <resultMap id="ExpandResultMap" type="com.shine.cm.common.bean.business.forum.BForumCommentInfo" extends="com.shine.forum.mapper.db.TForumCommentInfoMapper.BaseResultMap">
+    <result column="USER_AVATAR" jdbcType="VARCHAR" property="userAvatar" />
+    <result column="INTRODUCE" jdbcType="VARCHAR" property="introduce" />
+  </resultMap>
+  <resultMap id="UserCommentResultMap" type="com.shine.cm.common.bean.business.user.UserCommentInfo" extends="com.shine.forum.mapper.db.TForumCommentInfoMapper.BaseResultMap">
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_AVATAR" jdbcType="VARCHAR" property="userAvatar" />
+    <result column="REPLY_CONTENT" jdbcType="VARCHAR" property="replyContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    COMMENT_ID, COMMENT_REPLY_ID, COMMENT_USER_ID, COMMENT_USER_NAME, COMMENT_CONTENT, 
+    REPLY_SOMEONE, COMMENT_REPLY_USER_ID, COMMENT_REPLY_USER_NAME, MODIFIER_USER_NAME, 
+    MODIFY_TIME, CREATOR_USER_NAME, CREATE_TIME, DEL_FLAG
+  </sql>
+  <sql id="Expand_Column_List">
+    COMMENT_ID, COMMENT_REPLY_ID, COMMENT_USER_ID, COMMENT_USER_NAME, COMMENT_CONTENT,
+    REPLY_SOMEONE, COMMENT_REPLY_USER_ID, COMMENT_REPLY_USER_NAME, comment.MODIFIER_USER_NAME,
+    comment.MODIFY_TIME, comment.CREATOR_USER_NAME, comment.CREATE_TIME, comment.DEL_FLAG,
+    user_info.USER_AVATAR,user_info.INTRODUCE
+  </sql>
+  <sql id="User_Column_List">
+    COMMENT_ID, COMMENT_REPLY_ID, COMMENT_USER_ID, COMMENT_USER_NAME, COMMENT_CONTENT,
+    REPLY_SOMEONE, COMMENT_REPLY_USER_ID, COMMENT_REPLY_USER_NAME, ci.MODIFIER_USER_NAME,
+    ci.MODIFY_TIME, ci.CREATOR_USER_NAME, ci.CREATE_TIME, ci.DEL_FLAG,
+    ui.USER_NAME,ui.USER_AVATAR,reply.REPLY_CONTENT
+  </sql>
+  <select id="selectCommentPageList" resultMap="ExpandResultMap">
+    select
+    <include refid="Expand_Column_List" />
+    from ${db.shine}.forum_comment_info comment INNER JOIN
+    ${db.shine}.mem_user_info user_info ON comment.COMMENT_USER_ID = user_info.USER_ID
+    where COMMENT_REPLY_ID = #{replyId,jdbcType=BIGINT}
+  </select>
+  <select id="getCommentsByUserId" resultMap="UserCommentResultMap">
+    SELECT <include refid="User_Column_List"/>
+    FROM ${db.shine}.forum_comment_info ci
+    INNER JOIN ${db.shine}.forum_reply_info reply ON ci.COMMENT_REPLY_ID = reply.REPLY_ID
+    INNER JOIN ${db.shine}.mem_user_info ui ON reply.REPLY_USER_ID = ui.USER_ID
+    WHERE ci.COMMENT_USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  <sql id="BaseColumnAlias">
+    T.COMMENT_ID, T.COMMENT_REPLY_ID, T.COMMENT_USER_ID, T.COMMENT_USER_NAME, T.COMMENT_CONTENT, 
+    T.REPLY_SOMEONE, T.COMMENT_REPLY_USER_ID, T.COMMENT_REPLY_USER_NAME, T.MODIFIER_USER_NAME, 
+    T.MODIFY_TIME, T.CREATOR_USER_NAME, T.CREATE_TIME, T.DEL_FLAG
+  </sql>
+
+</mapper>

@@ -12,9 +12,9 @@ public class TokenFallbark implements TokenFeign {
         return null;
     }
 
-    @Override
-    public ResultDO<String> logout(String token) {
-        return null;
-    }
+//    @Override
+//    public ResultDO<String> logout(String token) {
+//        return null;
+//    }
 
 }

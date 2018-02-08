@@ -4,8 +4,8 @@ server:
 spring:
     #redis
     redis:
-        host: 101.132.142.239
-        password: zhaitonghui12138!
+        host: 192.168.99.100
+        password:
         port: 6379
         timeout: 3000
         pool:

@@ -10,6 +10,10 @@ public class Token {
     public Token() {
     }
 
+    public Token(TMemUserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
     public Token(String token, TMemUserInfo userInfo) {
         this.token = token;
         this.userInfo = userInfo;
